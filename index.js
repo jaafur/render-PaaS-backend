@@ -34,7 +34,6 @@ app.use(cors({origin:'http://localhost:5173'}))
 app.use(express.static('dist'))
 
 app.get('/api/persons',(req,res)=>{
-   
     res.status(200).json(persons)
     console.log('hi from backend get persons')
     
