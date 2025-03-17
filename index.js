@@ -1,9 +1,26 @@
+require('dotenv').config();
 const express = require('express')
 const {v4:uuidv4} = require('uuid')
 const morgan = require('morgan')
 const cors = require('cors')
+const mongoose = require('mongoose') 
+const Note = require('./models/note')
+
 const app = express()
 const PORT = process.env.PORT || 3001
+
+const url = process.env.MONGODB_URI
+
+
+mongoose
+.connect(url)
+.then(()=>console.log('connected to db'))
+.catch((err)=>{
+    console.log(err)
+    process.exit(1)
+})
+
+
 let persons =[
     { 
       "id": "1",
@@ -34,8 +51,15 @@ app.use(cors({origin:'http://localhost:5173'}))
 app.use(express.static('dist'))
 
 app.get('/api/persons',(req,res)=>{
-    res.status(200).json(persons)
-    console.log('hi from backend get persons')
+    
+    Note.find({}).then(notes =>{
+        res.json(notes)
+        
+    })
+    .catch(err =>{
+        console.log(err)
+        res.status(500).json({error : 'database query field'})
+    })
     
 })
 
