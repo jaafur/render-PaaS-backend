@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config()
 const express = require('express')
 const {v4:uuidv4} = require('uuid')
 const morgan = require('morgan')
@@ -9,16 +9,21 @@ const Note = require('./models/note')
 const app = express()
 const PORT = process.env.PORT || 3001
 
-const url = process.env.MONGODB_URI
+const MONGODB_URI = "mongodb+srv://fullStackCourse:06220029644Aa@cluster0.mjmpc.mongodb.net/NoteApp?retryWrites=true&w=majority";
+
+
+// console.log('MongoDB URI:', url);
+// console.log('Type of URL:', typeof url);
+
 
 
 mongoose
-.connect(url)
-.then(()=>console.log('connected to db'))
-.catch((err)=>{
-    console.log(err)
-    process.exit(1)
-})
+.connect(MONGODB_URI)
+  .then(() => console.log('connected to db'))
+  .catch(err => {
+    console.error('Error connecting to db:', err.message || err);
+    process.exit(1); // Optional: force exit if database connection fails
+  });
 
 
 let persons =[
