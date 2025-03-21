@@ -11,7 +11,11 @@ const PORT = process.env.PORT || 3001
 app.use(express.json())
 morgan.token('body',(req)=>JSON.stringify(req.body))
 app.use(morgan(':method :url :status :response-time ms :body'))
-app.use(cors({origin:'http://localhost:5173'}))
+app.use(cors({
+    origin: ['http://localhost:5173', 'https://render-paas-bpom.onrender.com'], // Allow both local dev and deployed frontend
+    methods: 'GET,POST,PUT,DELETE',
+    credentials: true
+}));
 app.use(express.static('dist'))
 
 app.get('/api/persons',(req,res)=>{
