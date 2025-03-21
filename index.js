@@ -1,53 +1,12 @@
-require('dotenv').config()
-const express = require('express')
-const {v4:uuidv4} = require('uuid')
-const morgan = require('morgan')
-const cors = require('cors')
-const mongoose = require('mongoose') 
+require('dotenv').config(); // Ensure dotenv is loaded at the top
+const express = require('express');
+const { v4: uuidv4 } = require('uuid');
+const morgan = require('morgan');
+const cors = require('cors');
 const Note = require('./models/note')
-
-const app = express()
+// const {MONGODB_URI} = require('./config')
+const app = express();
 const PORT = process.env.PORT || 3001
-
-const MONGODB_URI = "mongodb+srv://fullStackCourse:06220029644Aa@cluster0.mjmpc.mongodb.net/NoteApp?retryWrites=true&w=majority";
-
-
-// console.log('MongoDB URI:', url);
-// console.log('Type of URL:', typeof url);
-
-
-
-mongoose
-.connect(MONGODB_URI)
-  .then(() => console.log('connected to db'))
-  .catch(err => {
-    console.error('Error connecting to db:', err.message || err);
-    process.exit(1); // Optional: force exit if database connection fails
-  });
-
-
-let persons =[
-    { 
-      "id": "1",
-      "name": "Arto Hellas", 
-      "number": "040-123456"
-    },
-    { 
-      "id": "2",
-      "name": "Ada Lovelace", 
-      "number": "39-44-5323523"
-    },
-    { 
-      "id": "3",
-      "name": "Dan Abramov", 
-      "number": "12-43-234345"
-    },
-    { 
-      "id": "4",
-      "name": "Mary Poppendieck", 
-      "number": "39-23-6423122"
-    }
-]
 
 app.use(express.json())
 morgan.token('body',(req)=>JSON.stringify(req.body))
